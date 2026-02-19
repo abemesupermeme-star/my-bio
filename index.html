@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Моя Биография | Анимированная версия</title>
+    <title>z3rt1x | Digital Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
-        /* Основные стили */
+        :root {
+            --accent: #3498db;
+            --bg-glass: rgba(15, 15, 25, 0.75);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
         body {
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
@@ -15,133 +21,165 @@
             align-items: center;
             min-height: 100vh;
             color: #ffffff;
-            /* Используем твое изображение на фон */
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
                         url('Fuji Sama (Mt_ Fuji - Japan).jpg') no-repeat center center fixed;
             background-size: cover;
             overflow-x: hidden;
         }
 
-        /* Анимация появления карточки */
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .glass-card {
-            background: rgba(15, 15, 25, 0.7); /* Чуть темнее для контраста с облаками */
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--bg-glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
             border-radius: 24px;
             padding: 40px;
-            max-width: 850px;
-            width: 90%;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            
-            /* Применяем анимацию */
-            animation: fadeInUp 1s ease-out forwards;
+            max-width: 900px;
+            width: 92%;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        /* Статус-бар в стиле терминала */
+        .status-bar {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 25px;
+            font-size: 0.85em;
+            color: #00ff00;
+            border-left: 3px solid var(--accent);
         }
 
         .header {
             display: flex;
             align-items: center;
             gap: 30px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--border);
             padding-bottom: 25px;
             margin-bottom: 30px;
         }
 
-        /* Анимация для фото */
         .profile-img {
-            width: 130px;
-            height: 130px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            border: 3px solid #3498db;
+            border: 2px solid var(--accent);
             object-fit: cover;
-            box-shadow: 0 0 15px rgba(52, 152, 219, 0.5);
-            transition: transform 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
         }
 
         .profile-img:hover {
-            transform: scale(1.05); /* Легкое увеличение при наведении */
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 25px rgba(52, 152, 219, 0.6);
         }
 
-        h1 { margin: 0; font-size: 2.8em; letter-spacing: -1px; }
-        h2 { color: #3498db; font-size: 1.1em; text-transform: uppercase; letter-spacing: 2px; margin-top: 25px; }
-        
-        .contact-info { color: #a0a0a0; margin-top: 8px; font-size: 0.95em; }
+        h1 { margin: 0; font-size: 2.2em; font-weight: 700; letter-spacing: -1px; }
+        h2 { color: var(--accent); font-size: 1em; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
 
-        .content {
+        /* Кликабельные контакты */
+        .contact-links { margin-top: 10px; display: flex; gap: 15px; flex-wrap: wrap; }
+        .contact-item {
+            text-decoration: none;
+            color: #a0a0a0;
+            font-size: 0.9em;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .contact-item:hover { color: #fff; }
+
+        .grid-layout {
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 50px;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
         }
 
-        p { line-height: 1.7; color: #e0e0e0; font-weight: 300; }
-        
-        /* Анимация списка */
-        li { 
-            margin-bottom: 12px; 
-            list-style: none;
-            position: relative;
+        /* Карточки проектов */
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            transition: all 0.3s ease;
         }
-        li::before {
-            content: "→";
-            position: absolute;
-            left: -20px;
-            color: #3498db;
+        .project-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            transform: translateX(10px);
+            border-color: var(--accent);
         }
 
-        /* Адаптивность для мобилок */
+        ul { padding: 0; list-style: none; }
+        li { margin-bottom: 10px; padding-left: 20px; position: relative; color: #e0e0e0; }
+        li::before { content: "›"; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
+
+        p { line-height: 1.6; color: #d0d0d0; }
+
         @media (max-width: 768px) {
             .header { flex-direction: column; text-align: center; }
-            .content { grid-template-columns: 1fr; gap: 20px; }
-            .glass-card { padding: 25px; margin: 20px; }
+            .grid-layout { grid-template-columns: 1fr; gap: 20px; }
+            .contact-links { justify-content: center; }
         }
     </style>
 </head>
 <body>
 
 <div class="glass-card">
+    <div class="status-bar">
+        > system_status: online | mode: fastboot | current_task: evolving_every_day
+    </div>
+
     <div class="header">
-        <img src="photo_2026-01-25_13-18-36.jpg" alt="Моё фото" class="profile-img">
+        <img src="photo_2026-01-25_13-18-36.jpg" alt="z3rt1x" class="profile-img">
         <div>
-            <h1>z3rt1x(тот же Темна или Кама)</h1>
-            <div class="contact-info">
-                <span>📍 Уфа</span> | 
-                <span>✉️ abemesupermeme@gmail.com</span> | 
-                <span>📱 @z3rt1x</span>
+            <h1>z3rt1x</h1>
+            <div class="contact-links">
+                <span class="contact-item">📍 Уфа</span>
+                <a href="mailto:abemesupermeme@gmail.com" class="contact-item">✉️ Почта</a>
+                <a href="https://t.me/z3rt1x" target="_blank" class="contact-item">📱 Telegram</a>
             </div>
         </div>
     </div>
 
-    <div class="content">
+    <div class="grid-layout">
         <div class="left-col">
-            <h2>Обо мне</h2>
-            <p>Еду, но не к тебе. Летаю, но не с тобой. MY BIO YET.</p>
+            <h2>Core Info</h2>
+            <p>Еду, но не к тебе. Летаю, но не с тобой. <b>MY BIO YET.</b></p>
             
-            <h2>Навыки</h2>
-            <ul>
-                <li>Разработка веб-сайтов (HTML/CSS)</li>
-                <li>Прошив телефонов</li>
-                <li>Игра на гитаре</li>
-                <li>Программирование на C#</li>
-            </ul>
+            <h2>Stack & Skills</h2>
+            <div class="project-card">
+                <strong>Software:</strong> C#, HTML/CSS, Git
+            </div>
+            <div class="project-card">
+                <strong>Hardware:</strong> Fastboot, Custom Recovery, Flashing
+            </div>
+            <div class="project-card">
+                <strong>Creative:</strong> Guitar Playing
+            </div>
         </div>
 
         <div class="right-col">
-            <h2>День?</h2>
-            <p>Каждый день выглядит как кнопка FLASH и fastboot oem poweroff</p>
+            <h2>The Daily Flash</h2>
+            <p>Каждый день выглядит как кнопка FLASH и <code>fastboot oem poweroff</code>. Если не шью систему, значит шью код.</p>
             
-            <h2>Саморазвитие?</h2>
-            <p>Саморазвитие это еври дей, в соло не кайфую, но и не умираю</p>
+            <h2>Philosophy</h2>
+            <p>Саморазвитие — это еври дей. В соло не кайфую, но и не умираю. Двигаюсь в своем темпе.</p>
+            
+            <h2>Activity Log</h2>
+            <ul>
+                <li>Updating local repository...</li>
+                <li>Learning C# patterns</li>
+                <li>Mastering guitar solos</li>
+            </ul>
         </div>
     </div>
 </div>
